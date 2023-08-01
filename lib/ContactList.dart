@@ -312,10 +312,10 @@ class _ContactListState extends State<ContactList> {
             title: Text(contact.name),
             subtitle: Text(contact.lastMessage),
             onTap: (){
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SendMessage(),
+                  builder: (context) => SendMessage(toUser: contact.userId,),
                 ),
               );
             },

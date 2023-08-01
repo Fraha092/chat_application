@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
         final String email = user['email'];
         final String phone = user['phone'];
         final String location = user['location'];
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => ContactList(),

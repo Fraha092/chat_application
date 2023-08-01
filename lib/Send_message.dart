@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-
 import 'MessageHistoryPage.dart';
 
 class SendMessage extends StatefulWidget {
-  const SendMessage({super.key});
+  final int toUser;
+  const SendMessage({super.key, required this.toUser});
 
   @override
   State<SendMessage> createState() => _SendMessageState();
@@ -26,7 +26,7 @@ class _SendMessageState extends State<SendMessage> {
   }
 
   void _initSocketIO() {
-    socket = IO.io('{{SVKRAFT}}/send-sms', IO.OptionBuilder().setTransports(['websocket']).build());
+    socket = IO.io('http://svkraft.shop/api/send-sms', IO.OptionBuilder().setTransports(['websocket']).build());
     socket.onConnect((data) {
       print("Connected to Socket.IO server");
     });
@@ -47,6 +47,7 @@ class _SendMessageState extends State<SendMessage> {
   }
 
   void _sendMessage() async {
+    //final String toUser='';
     final String message = _messageController.text.trim();
     if (message.isNotEmpty) {
       String token='372|wscSqMEI5HZzgwuOQXcmBwJu87YHN9ix2PenlZTh';
@@ -55,7 +56,7 @@ class _SendMessageState extends State<SendMessage> {
       };
       var request = http.MultipartRequest('POST', Uri.parse('http://svkraft.shop/api/send-sms'));
       request.fields.addAll({
-        'to_user': '4',
+        'to_user': widget.toUser.toString(),
         'message': message,
       });
       request.headers.addAll(headers);
@@ -85,7 +86,7 @@ class _SendMessageState extends State<SendMessage> {
           children: [
             Text('Real Time Message'),
             IconButton(onPressed: (){
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => MessagingPage(),
