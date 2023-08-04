@@ -5,7 +5,8 @@ import 'MessageHistoryPage.dart';
 
 class SendMessage extends StatefulWidget {
   final int toUser;
-  const SendMessage({super.key, required this.toUser});
+  final String lastMessage;
+  const SendMessage({super.key, required this.toUser, required this.lastMessage});
 
   @override
   State<SendMessage> createState() => _SendMessageState();
@@ -97,13 +98,22 @@ class _SendMessageState extends State<SendMessage> {
         ),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Padding(
+            padding: const EdgeInsets.all(13.0),
+            child: Text('You: ${widget.lastMessage.toString()}'),
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: _messages.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(_messages[index]),
+                return Column(
+                  children: [
+                    ListTile(
+                      title: Text(_messages[index]),
+                    ),
+                  ],
                 );
               },
             ),

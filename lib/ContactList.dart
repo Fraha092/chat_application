@@ -315,7 +315,7 @@ class _ContactListState extends State<ContactList> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SendMessage(toUser: contact.userId,),
+                  builder: (context) => SendMessage(toUser: contact.userId, lastMessage: contact.lastMessage,),
                 ),
               );
             },
